@@ -1,8 +1,11 @@
 package com.gemini.function.ai.configurations;
 
+import com.gemini.function.ai.services.MultiToolsService;
+import com.gemini.function.ai.services.QuestionAgent;
 import dev.langchain4j.memory.chat.MessageWindowChatMemory;
 import dev.langchain4j.model.chat.ChatLanguageModel;
 import dev.langchain4j.model.vertexai.ToolCallingMode;
+import dev.langchain4j.service.AiServices;
 import lombok.extern.slf4j.Slf4j;
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +39,21 @@ public class AppConfig {
         return MessageWindowChatMemory.builder()
                 .maxMessages(20)
                 .build();
+    }
+
+    @Bean(name = "questionAgent")
+    public QuestionAgent questionAgent(
+            ChatLanguageModel model,
+            MessageWindowChatMemory chatMemory,
+            MultiToolsService multiToolsService
+    ) {
+
+        return AiServices.builder(QuestionAgent.class)
+                .chatLanguageModel(model)
+                .chatMemory(chatMemory)
+                .tools(multiToolsService)
+                .build();
+
     }
 
 }

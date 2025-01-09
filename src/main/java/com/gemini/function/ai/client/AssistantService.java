@@ -8,12 +8,11 @@ import reactor.core.publisher.Flux;
 
 @BrowserCallable
 @AnonymousAllowed
-//@AllArgsConstructor
+@AllArgsConstructor
 public class AssistantService {
-//    private final QuestionAgent questionAgent;
+    private final QuestionAgent questionAgent;
 
     public Flux<String> chat(String userMessage) {
-//        return Flux.just(questionAgent.chat(userMessage));
-        return Flux.just("Hello");
+        return Flux.just(questionAgent.chat(userMessage));
     }
 }

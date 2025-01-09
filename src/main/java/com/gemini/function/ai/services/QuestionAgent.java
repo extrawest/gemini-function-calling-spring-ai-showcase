@@ -1,10 +1,7 @@
 package com.gemini.function.ai.services;
 
 import dev.langchain4j.service.SystemMessage;
-import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.service.spring.AiService;
 
-@AiService
 public interface QuestionAgent {
 
     @SystemMessage("""
@@ -12,6 +9,6 @@ public interface QuestionAgent {
             Your primary role is to provide accurate, real-time information by calling specific functions when necessary.
             Do not perform any other tasks.
             """)
-    String chat(@UserMessage String userMessage);
+    String chat(String userMessage);
 
 }
