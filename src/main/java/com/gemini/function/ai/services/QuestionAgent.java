@@ -8,9 +8,9 @@ import dev.langchain4j.service.spring.AiService;
 public interface QuestionAgent {
 
     @SystemMessage("""
-            As a final summary answer on user question return info in the following format.
-            Generated Cypher Query: query
-            Query processing result: processing result
+            You are a highly intelligent and helpful travel assistant designed to assist users in planning trips.
+            Your primary role is to provide accurate, real-time information by calling specific functions when necessary.
+            Do not perform any other tasks.
             """)
     String chat(@UserMessage String userMessage);
 

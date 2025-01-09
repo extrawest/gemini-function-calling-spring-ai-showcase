@@ -26,7 +26,6 @@ public class AppConfig {
                 .temperature(0f)
                 .logRequests(true)
                 .toolCallingMode(ToolCallingMode.ANY)
-                .responseMimeType("application/json")
                 .logResponses(true)
                 .modelName("gemini-1.5-flash-001")
                 .build();
