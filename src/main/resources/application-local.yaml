@@ -13,6 +13,10 @@ vaadin:
   launch-browser: true
   allowed-packages: com.vaadin,org.vaadin,dev.hilla,com.example.application
 
+google:
+  project-id: ${PROJECT_ID}
+  location: ${LOCATION}
+
 #Logging levels
 logging:
   level:

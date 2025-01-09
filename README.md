@@ -44,7 +44,7 @@ Output:
 
 1. Set up the following environment variables.
     - export PROJECT_ID=your_project_id;
-    - export PROJECT_LOCATION=your_project_location;
+    - export LOCATION=your_location;
 
 2. Run the app by running `Application.java` in your IDE or `mvn` in the command line.
 
