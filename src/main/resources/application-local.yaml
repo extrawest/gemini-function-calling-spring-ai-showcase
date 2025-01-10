@@ -17,6 +17,11 @@ google:
   project-id: ${PROJECT_ID}
   location: ${LOCATION}
 
+external:
+  api:
+    flight:
+      api-key: ${FLIGHT_API_KEY}
+
 #Logging levels
 logging:
   level:

@@ -1,45 +1,47 @@
 package com.gemini.function.ai.services;
 
-import com.gemini.function.ai.model.TicketResponse;
+import com.gemini.function.ai.model.flights.FlightsRequest;
+import com.gemini.function.ai.model.flights.FlightsResponse;
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
-import com.gemini.function.ai.model.AttractionResponse;
-import com.gemini.function.ai.model.HotelResponse;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
+@AllArgsConstructor
 public class MultiToolsService {
+    private final ExternalApiHttpClient httpClient;
 
     @Tool("Get the attraction for a key")
-    AttractionResponse getAttraction(@P("Key to get the attraction") String key) {
-        if (key.equals("Attraction1")) {
-            return new AttractionResponse("Attraction1");
-        } else if (key.equals("Attraction2")) {
-            return new AttractionResponse("Attraction2");
-        } else {
-            return new AttractionResponse("UnknownAttraction");
-        }
+    String getAttraction(@P("Key to get the attraction") String key) {
+        return "";
     }
 
     @Tool("Get the hotel for a key")
-    HotelResponse getHotel(@P("Key to get the hotel") String key) {
-        if (key.equals("Hotel1")) {
-            return new HotelResponse("Hotel1");
-        } else if (key.equals("Hotel2")) {
-            return new HotelResponse("Hotel2");
-        } else {
-            return new HotelResponse("UnknownHotel");
-        }
+    String getHotel(@P("Key to get the hotel") String key) {
+       return "";
     }
 
-    @Tool("Get the ticket for a key")
-    TicketResponse getTicket(@P("Key to get the ticket") String key) {
-        if (key.equals("Ticket1")) {
-            return new TicketResponse("Ticket1");
-        } else if (key.equals("Ticket2")) {
-            return new TicketResponse("Ticket2");
-        } else {
-            return new TicketResponse("UnknownTicket");
-        }
+    @Tool("Search flights by the user query")
+    String searchFlights(
+            @P("This is the IATA code of departure airport.") String departureAirportCode,
+            @P("This is the IATA code of arrival airport.") String arrivalAirportCode,
+            @P("Date of departure Format - YYYY-MM-DD") String departureDate,
+            @P("Date of Arrival Format - YYYY-MM-DD") String arrivalDate
+    ) {
+        FlightsRequest flightRequest = new FlightsRequest(
+                departureAirportCode,
+                arrivalAirportCode,
+                departureDate,
+                arrivalDate
+        );
+        log.info(flightRequest.toString());
+
+        FlightsResponse flightsResponse = httpClient.searchFlights(flightRequest);
+        log.info(flightsResponse.toString());
+
+        return flightsResponse.toString();
     }
 }
