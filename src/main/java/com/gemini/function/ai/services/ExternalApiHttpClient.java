@@ -2,6 +2,8 @@ package com.gemini.function.ai.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gemini.function.ai.model.attractions.AttractionsRequest;
+import com.gemini.function.ai.model.attractions.AttractionsResponse;
 import com.gemini.function.ai.model.flights.FlightsRequest;
 import com.gemini.function.ai.model.flights.FlightsResponse;
 import com.gemini.function.ai.model.hotels.CityMappingResponse;
@@ -26,6 +28,10 @@ public class ExternalApiHttpClient {
     private String flightApiKey;
     @Value("${external.api.hotel.api-key}")
     private String hotelApiKey;
+
+    public AttractionsResponse searchAttractions(AttractionsRequest request) {
+        return null;
+    }
 
     // REQUEST example: https://api.flightapi.io/roundtrip/{api_key}/HAN/SGN/2025-04-11/2025-04-11/1/0/1/Economy/USD
     public FlightsResponse searchFlights(FlightsRequest request) {

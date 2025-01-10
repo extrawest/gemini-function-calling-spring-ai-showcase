@@ -1,5 +1,7 @@
 package com.gemini.function.ai.services;
 
+import com.gemini.function.ai.model.attractions.AttractionsRequest;
+import com.gemini.function.ai.model.attractions.AttractionsResponse;
 import com.gemini.function.ai.model.flights.FlightsRequest;
 import com.gemini.function.ai.model.flights.FlightsResponse;
 import com.gemini.function.ai.model.hotels.HotelsRequest;
@@ -18,9 +20,15 @@ import java.util.List;
 public class MultiToolsService {
     private final ExternalApiHttpClient httpClient;
 
-    @Tool("Get the attraction for a key")
-    String getAttraction(@P("Key to get the attraction") String key) {
-        return "";
+    @Tool("Search attractions by the user query")
+    String getAttraction(@P("Name of the city") String city) {
+        AttractionsRequest attractionsRequest = new AttractionsRequest(city);
+        log.info(attractionsRequest.toString());
+
+        AttractionsResponse attractionsResponse = httpClient.searchAttractions(attractionsRequest);
+        log.info(attractionsResponse.toString());
+
+        return attractionsResponse.toString();
     }
 
     @Tool("Search hotels by the user query")
@@ -45,12 +53,7 @@ public class MultiToolsService {
             @P("Date of departure Format - YYYY-MM-DD") String departureDate,
             @P("Date of Arrival Format - YYYY-MM-DD") String arrivalDate
     ) {
-        FlightsRequest flightRequest = new FlightsRequest(
-                departureAirportCode,
-                arrivalAirportCode,
-                departureDate,
-                arrivalDate
-        );
+        FlightsRequest flightRequest = new FlightsRequest(departureAirportCode, arrivalAirportCode, departureDate, arrivalDate);
         log.info(flightRequest.toString());
 
         FlightsResponse flightsResponse = httpClient.searchFlights(flightRequest);
