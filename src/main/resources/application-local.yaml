@@ -23,6 +23,8 @@ external:
       api-key: ${FLIGHT_API_KEY}
     hotel:
       api-key: ${HOTEL_API_KEY}
+    attraction:
+      api-key: ${ATTRACTION_API_KEY}
 
 #Logging levels
 logging:

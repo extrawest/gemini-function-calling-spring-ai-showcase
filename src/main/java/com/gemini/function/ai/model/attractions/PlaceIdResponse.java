@@ -8,10 +8,9 @@ import lombok.ToString;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
 @Data
-public class AttractionsResponse {
-    private String type;
-    private List<Attraction> features;
+public class PlaceIdResponse {
+    private List<Place> results;
 }

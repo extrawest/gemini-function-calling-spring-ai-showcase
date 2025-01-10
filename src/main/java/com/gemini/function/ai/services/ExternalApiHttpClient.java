@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gemini.function.ai.model.attractions.AttractionsRequest;
 import com.gemini.function.ai.model.attractions.AttractionsResponse;
+import com.gemini.function.ai.model.attractions.Place;
+import com.gemini.function.ai.model.attractions.PlaceIdResponse;
 import com.gemini.function.ai.model.flights.FlightsRequest;
 import com.gemini.function.ai.model.flights.FlightsResponse;
 import com.gemini.function.ai.model.hotels.CityMappingResponse;
@@ -21,21 +23,44 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class ExternalApiHttpClient {
-    private static final String FLIGHT_API_URL = "https://api.flightapi.io/roundtrip";
-    private static final String HOTEL_API_URL = "https://api.makcorps.com";
-
     @Value("${external.api.flight.api-key}")
     private String flightApiKey;
     @Value("${external.api.hotel.api-key}")
     private String hotelApiKey;
+    @Value("${external.api.attraction.api-key}")
+    private String attractionApiKey;
 
+    // REQUEST example: https://api.geoapify.com/v2/places?categories=tourism.attraction&apiKey={api_key}&filter=place:51b9afa5f60daf3e4059c604df6b2d3e4740f00101f90155a9c40000000000c0020892032ad09ed0b4d0b5d181d18cd0bad0b020d0bcd196d181d18cd0bad0b020d0b3d180d0bed0bcd0b0d0b4d0b0&limit=20
     public AttractionsResponse searchAttractions(AttractionsRequest request) {
-        return null;
+        PlaceIdResponse placeId = getPlaceId(request.getCity());
+        if (Objects.nonNull(placeId)) {
+            log.info(placeId.toString());
+        }
+
+        if (Objects.nonNull(placeId) && Objects.nonNull(placeId.getResults()) && !placeId.getResults().isEmpty()) {
+            Place place = placeId.getResults().getFirst();
+            log.info(place.toString());
+            return getRestClient("https://api.geoapify.com/v2/places")
+                    .get()
+                    .uri(uriBuilder -> uriBuilder
+                            .queryParam("categories", "tourism.attraction")
+                            .queryParam("apiKey", attractionApiKey)
+                            .queryParam("filter", "place:" + place.getPlaceId())
+                            .queryParam("format", "json")
+                            .queryParam("limit", 10)
+                            .queryParam("lang", "en")
+                            .build()
+                    )
+                    .retrieve()
+                    .body(AttractionsResponse.class);
+        } else {
+            return new AttractionsResponse();
+        }
     }
 
     // REQUEST example: https://api.flightapi.io/roundtrip/{api_key}/HAN/SGN/2025-04-11/2025-04-11/1/0/1/Economy/USD
     public FlightsResponse searchFlights(FlightsRequest request) {
-        return getRestClient(FLIGHT_API_URL)
+        return getRestClient("https://api.flightapi.io/roundtrip")
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path(getFlightsPath(request))
@@ -51,10 +76,9 @@ public class ExternalApiHttpClient {
         Optional<CityMappingResponse> geo = Arrays.stream(cityIdArray).filter(cityMapping -> cityMapping.getType().equals("GEO")).findFirst();
         if (geo.isPresent()) {
             log.info(geo.toString());
-            String hotelResponseString = getRestClient(HOTEL_API_URL)
+            String hotelResponseString = getRestClient("https://api.makcorps.com/city")
                     .get()
                     .uri(uriBuilder -> uriBuilder
-                            .path("/city")
                             .queryParam("api_key", hotelApiKey)
                             .queryParam("cityid", geo.get().getDocumentId())
                             .queryParam("pagination", 0)
@@ -85,12 +109,28 @@ public class ExternalApiHttpClient {
         }
     }
 
-    // REQUEST example: https://api.makcorps.com/mapping?api_key={api_key}&name=London"
-    private CityMappingResponse[] findCityId(String city) {
-        return getRestClient(HOTEL_API_URL)
+    // REQUEST example: https://api.geoapify.com/v1/geocode/search?apiKey={api_key}&text=11%20Av.%20de%20la%20Bourdonnais%2C%2075007%20Paris%2C%20France&format=json
+    private PlaceIdResponse getPlaceId(String place) {
+        return getRestClient("https://api.geoapify.com/v1/geocode/search")
                 .get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/mapping")
+                        .queryParam("apiKey", attractionApiKey)
+                        .queryParam("text", place)
+                        .queryParam("type", "city")
+                        .queryParam("format", "json")
+                        .queryParam("limit", 10)
+                        .queryParam("lang", "en")
+                        .build()
+                )
+                .retrieve()
+                .body(PlaceIdResponse.class);
+    }
+
+    // REQUEST example: https://api.makcorps.com/mapping?api_key={api_key}&name=London"
+    private CityMappingResponse[] findCityId(String city) {
+        return getRestClient("https://api.makcorps.com/mapping")
+                .get()
+                .uri(uriBuilder -> uriBuilder
                         .queryParam("api_key", hotelApiKey)
                         .queryParam("name", city)
                         .build()

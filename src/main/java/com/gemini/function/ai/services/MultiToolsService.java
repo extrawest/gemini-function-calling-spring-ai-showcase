@@ -21,7 +21,7 @@ public class MultiToolsService {
     private final ExternalApiHttpClient httpClient;
 
     @Tool("Search attractions by the user query")
-    String getAttraction(@P("Name of the city") String city) {
+    String getAttraction(@P("Name of the city and country where attractions is searching Format: Tokyo, Japan") String city) {
         AttractionsRequest attractionsRequest = new AttractionsRequest(city);
         log.info(attractionsRequest.toString());
 

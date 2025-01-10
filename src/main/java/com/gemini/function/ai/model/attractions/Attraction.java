@@ -5,13 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
 @Data
-public class AttractionsResponse {
+public class Attraction {
     private String type;
-    private List<Attraction> features;
+    private AttractionProperty properties;
 }

@@ -1,17 +1,18 @@
 package com.gemini.function.ai.model.attractions;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.List;
-
 @JsonIgnoreProperties(ignoreUnknown = true)
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
 @Data
-public class AttractionsResponse {
-    private String type;
-    private List<Attraction> features;
+public class Place {
+    private String city;
+    private String country;
+    @JsonProperty("place_id")
+    private String placeId;
 }
