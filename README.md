@@ -11,6 +11,10 @@ Designed using Java 21, Spring Boot, and LangChain4J, this cutting-edge service 
 
 
 
+https://github.com/user-attachments/assets/13434a84-881d-4136-a510-f73282b759fd
+
+
+
 
 ## Key Features
 - **AI-Powered Recommendations**: Provide personalized flights, hotels, and attractions recommendations based on user queries.
