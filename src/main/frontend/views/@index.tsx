@@ -9,7 +9,7 @@ export default function Index() {
   const [working, setWorking] = useState(false);
   const [messages, setMessages] = useState<MessageItem[]>([{
     role: 'assistant',
-    content: 'Welcome to Movies Search Demo! How can I help you?'
+    content: 'Welcome to Gemini Function Calling Demo! How can I help you?'
   }]);
 
   function addMessage(message: MessageItem) {
@@ -52,7 +52,7 @@ export default function Index() {
   return (
     <SplitLayout className="center h-full">
       <div className="flex flex-col gap-m p-m box-border h-full" style={{maxWidth: '80%', border: '1px solid #EEE'}}>
-        <h3>LangChain4j Neo4j Graph RAG - Movies Search Demo</h3>
+        <h3>Gemini Function Calling in Vertex AI - Java Spring AI Showcase</h3>
         <MessageList messages={messages} className="flex-grow"/>
         <MessageInput onSubmit={e => sendMessage(e.detail.value)} className="px-0"/>
       </div>
