@@ -13,4 +13,16 @@ public class Itinerary {
     @JsonProperty("leg_ids")
     private List<String> legIds;
     private double score;
+    @JsonProperty("pricing_options")
+    private List<PricingOption> pricingOptions;
+
+    @Override
+    public String toString() {
+        return "Itinerary{" +
+                "id='" + id + '\'' +
+                ", legIds=" + legIds +
+                ", score=" + score +
+                ", pricingOptions=" + pricingOptions +
+                '}';
+    }
 }

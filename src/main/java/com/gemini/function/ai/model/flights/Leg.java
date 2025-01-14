@@ -20,4 +20,16 @@ public class Leg {
     private List<String> segmentIds;
     private String departure;
     private String arrival;
+
+    @Override
+    public String toString() {
+        return "Leg{" +
+                "id='" + id + '\'' +
+                ", originPlaceId=" + originPlaceId +
+                ", destinationPlaceId=" + destinationPlaceId +
+                ", segmentIds=" + segmentIds +
+                ", departure='" + departure + '\'' +
+                ", arrival='" + arrival + '\'' +
+                '}';
+    }
 }

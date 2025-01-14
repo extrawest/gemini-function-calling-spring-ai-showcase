@@ -17,4 +17,16 @@ public class Segment {
     private String departure;
     private String arrival;
     private String mode;
+
+    @Override
+    public String toString() {
+        return "Segment{" +
+                "id='" + id + '\'' +
+                ", originPlaceId=" + originPlaceId +
+                ", destinationPlaceId=" + destinationPlaceId +
+                ", departure='" + departure + '\'' +
+                ", arrival='" + arrival + '\'' +
+                ", mode='" + mode + '\'' +
+                '}';
+    }
 }

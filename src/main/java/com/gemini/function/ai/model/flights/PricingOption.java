@@ -7,17 +7,13 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @Data
-public class Place {
-    private String id;
-    private String name;
-    private String type;
+public class PricingOption {
+    private Price price;
 
     @Override
     public String toString() {
-        return "Place{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", type='" + type + '\'' +
+        return "PricingOption{" +
+                "price=" + price +
                 '}';
     }
 }

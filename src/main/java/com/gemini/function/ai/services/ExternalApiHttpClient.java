@@ -60,7 +60,7 @@ public class ExternalApiHttpClient {
 
     // REQUEST example: https://api.flightapi.io/roundtrip/{api_key}/HAN/SGN/2025-04-11/2025-04-11/1/0/1/Economy/USD
     public FlightsResponse searchFlights(FlightsRequest request) {
-        return getRestClient("https://api.flightapi.io/roundtrip")
+        return getRestClient("https://api.flightapi.io/onewaytrip")
                 .get()
                 .uri(uriBuilder -> uriBuilder
                         .path(getFlightsPath(request))
@@ -146,7 +146,6 @@ public class ExternalApiHttpClient {
                 "/" + request.getDepartureAirportCode() +
                 "/" + request.getArrivalAirportCode() +
                 "/" + request.getDepartureDate() +
-                "/" + request.getArrivalDate() +
                 "/" + request.getNumberOfAdults() +
                 "/" + request.getNumberOfChildrens() +
                 "/" + request.getNumberOfInfants() +

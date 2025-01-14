@@ -14,4 +14,14 @@ public class FlightsResponse {
     private List<Leg> legs;
     private List<Place> places;
     private List<Segment> segments;
+
+    @Override
+    public String toString() {
+        return "FlightsResponse{" +
+                "itineraries=" + itineraries +
+                ", legs=" + legs +
+                ", places=" + places +
+                ", segments=" + segments +
+                '}';
+    }
 }

@@ -50,18 +50,17 @@ public class MultiToolsService {
     }
 
     @Tool("Search flights by the user query")
-    String searchFlights(
+    FlightsResponse searchFlights(
             @P("This is the IATA code of departure airport") String departureAirportCode,
             @P("This is the IATA code of arrival airport") String arrivalAirportCode,
-            @P("Date of departure Format - YYYY-MM-DD") String departureDate,
-            @P("Date of Arrival Format - YYYY-MM-DD") String arrivalDate
+            @P("Date of departure Format - YYYY-MM-DD") String departureDate
     ) {
-        FlightsRequest flightRequest = new FlightsRequest(departureAirportCode, arrivalAirportCode, departureDate, arrivalDate);
+        FlightsRequest flightRequest = new FlightsRequest(departureAirportCode, arrivalAirportCode, departureDate);
         log.info("Calling function 'searchFlights': {}", flightRequest);
 
         FlightsResponse flightsResponse = httpClient.searchFlights(flightRequest);
         log.info(flightsResponse.toString());
 
-        return flightsResponse.toString();
+        return flightsResponse;
     }
 }
