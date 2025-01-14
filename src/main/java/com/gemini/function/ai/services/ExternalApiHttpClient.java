@@ -43,7 +43,7 @@ public class ExternalApiHttpClient {
             return getRestClient("https://api.geoapify.com/v2/places")
                     .get()
                     .uri(uriBuilder -> uriBuilder
-                            .queryParam("categories", "tourism.attraction")
+                            .queryParam("categories", "tourism.sights,tourism.attraction")
                             .queryParam("apiKey", attractionApiKey)
                             .queryParam("filter", "place:" + place.getPlaceId())
                             .queryParam("format", "json")
