@@ -11,7 +11,11 @@ Designed using Java 21, Spring Boot, and LangChain4J, this cutting-edge service 
 
 
 
-https://github.com/user-attachments/assets/13434a84-881d-4136-a510-f73282b759fd
+
+
+https://github.com/user-attachments/assets/e4a61193-8250-41ef-bb02-24d3ee96657f
+
+
 
 
 
