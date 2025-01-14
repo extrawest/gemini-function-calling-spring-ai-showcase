@@ -10,7 +10,7 @@ import com.gemini.function.ai.model.flights.FlightsRequest;
 import com.gemini.function.ai.model.flights.FlightsResponse;
 import com.gemini.function.ai.model.hotels.CityMappingResponse;
 import com.gemini.function.ai.model.hotels.HotelsRequest;
-import com.gemini.function.ai.model.hotels.HotelsResponse;
+import com.gemini.function.ai.model.hotels.Hotel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,8 +71,10 @@ public class ExternalApiHttpClient {
     }
 
     // REQUEST example: https://api.makcorps.com/city?api_key={api_key}&cityid=60763&pagination=0&cur=USD&rooms=1&adults=2&checkin=2023-12-25&checkout=2023-12-26
-    public List<HotelsResponse> searchHotels(HotelsRequest request) {
+    public List<Hotel> searchHotels(HotelsRequest request) {
         CityMappingResponse[] cityIdArray = findCityId(request.getCity());
+        log.info("CityMappingResponse[]: {}", Arrays.toString(cityIdArray));
+
         Optional<CityMappingResponse> geo = Arrays.stream(cityIdArray).filter(cityMapping -> cityMapping.getType().equals("GEO")).findFirst();
         if (geo.isPresent()) {
             log.info(geo.toString());
@@ -96,7 +98,7 @@ public class ExternalApiHttpClient {
                 ObjectMapper objectMapper = new ObjectMapper();
                 try {
                     log.info("[{}]", substring);
-                    return Arrays.asList(objectMapper.readValue("[" + substring + "]", HotelsResponse[].class));
+                    return Arrays.asList(objectMapper.readValue("[" + substring + "]", Hotel[].class));
                 } catch (JsonProcessingException e) {
                     log.warn(e.getMessage());
                     return Collections.emptyList();

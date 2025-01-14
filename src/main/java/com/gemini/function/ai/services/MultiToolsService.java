@@ -7,7 +7,7 @@ import com.gemini.function.ai.model.attractions.AttractionsResponse;
 import com.gemini.function.ai.model.flights.FlightsRequest;
 import com.gemini.function.ai.model.flights.FlightsResponse;
 import com.gemini.function.ai.model.hotels.HotelsRequest;
-import com.gemini.function.ai.model.hotels.HotelsResponse;
+import com.gemini.function.ai.model.hotels.Hotel;
 import dev.langchain4j.agent.tool.P;
 import dev.langchain4j.agent.tool.Tool;
 import lombok.AllArgsConstructor;
@@ -35,7 +35,7 @@ public class MultiToolsService {
     }
 
     @Tool("Search hotels by the user query")
-    String searchHotels(
+    List<Hotel> searchHotels(
             @P("Name of the city") String city,
             @P("It is the check-in date Format - YYYY-MM-DD") String checkin,
             @P("It is the check-out date Format - YYYY-MM-DD") String checkout
@@ -43,10 +43,10 @@ public class MultiToolsService {
         HotelsRequest hotelsRequest = new HotelsRequest(city, checkin, checkout);
         log.info("Calling function 'searchHotels': {}", hotelsRequest);
 
-        List<HotelsResponse> hotelsResponses = httpClient.searchHotels(hotelsRequest);
-        log.info(hotelsResponses.toString());
+        List<Hotel> hotels = httpClient.searchHotels(hotelsRequest);
+        log.info(hotels.toString());
 
-        return hotelsResponses.toString();
+        return hotels;
     }
 
     @Tool("Search flights by the user query")
