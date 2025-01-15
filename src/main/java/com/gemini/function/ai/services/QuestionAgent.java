@@ -1,14 +1,14 @@
 package com.gemini.function.ai.services;
 
+import com.gemini.function.ai.model.AIModelResponse;
 import dev.langchain4j.service.SystemMessage;
 
 public interface QuestionAgent {
 
     @SystemMessage("""
-            You are a highly intelligent and helpful travel assistant designed to assist users in planning trips.
-            Your primary role is to provide accurate, real-time information by calling specific functions when necessary.
-            Do not perform any other tasks.
+            Generate and run code for the calculation and make sure you get correct result.
+            Return generated script and execution result.
             """)
-    String chat(String userMessage);
+    AIModelResponse chat(String userMessage);
 
 }
